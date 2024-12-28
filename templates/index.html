@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+  <title>MyTodo</title>
+  <style>
+    /* General styling for simplicity */
+    body {
+      background-color: white; /* Simple white background */
+      color: black; /* Black text for contrast */
+    }
+
+    /* Navbar customizations */
+    .navbar {
+      background-color: #f8f9fa; /* Light gray */
+      border: 1px solid #ddd; /* Add border around the navbar */
+      border-radius: 5px; /* Rounded corners */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: black !important; /* Navbar brand text in black */
+    }
+
+    .nav-link {
+      color: black !important; /* Navbar links in black */
+      transition: color 0.3s ease-in-out; /* Smooth hover transition */
+    }
+
+    .nav-link:hover {
+      color: #007bff !important; /* Change to blue on hover */
+    }
+
+    /* Form and table spacing */
+    .container {
+      margin-top: 2rem; /* Add spacing between the navbar and content */
+    }
+
+    .table {
+      margin-top: 2rem; /* Add spacing between the form and table */
+    }
+
+    /* Button styling */
+    .btn-dark {
+      background-color: black; /* Black button */
+      border-color: black; /* Black border */
+    }
+
+    .btn-dark:hover {
+      background-color: #333333; /* Slightly lighter black on hover */
+      border-color: #333333;
+    }
+  </style>
+</head>
+<body>
+  <!-- Content -->
+  <div>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">MyTodo</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-3">
+      <form class="row gy-2 gx-3 align-items-center" action="/" method="post">
+        <div class="col-auto">
+          <label class="visually-hidden" for="autoSizingInput">Name</label>
+          <input type="text" class="form-control" id="autoSizingInput" name="title" placeholder="Todo Title">
+        </div>
+        <div class="col-auto">
+          <label class="visually-hidden" for="desc">Description</label>
+          <div class="input-group">
+            <div class="input-group-text">@</div>
+            <input type="text" class="form-control" id="desc" name="desc" placeholder="Todo Description">
+          </div>
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-dark">Add Todo</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="container my-5">
+      <h2>Your Todos</h2>
+      {% if allTodo|length==0 %}
+      <div class="alert alert-dark" role="alert">
+        No Todos found. Add your first Todo now!
+      </div>
+      {% else %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">S.no</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Time</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todo in allTodo %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.desc }}</td>
+            <td>{{ todo.date_created }}</td>
+            <td>
+              <a href="/Update/{{ todo.sno }}" class="btn btn-outline-dark btn-sm">Update</a>
+              <a href="/Delete/{{ todo.sno }}" class="btn btn-outline-dark btn-sm">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>
